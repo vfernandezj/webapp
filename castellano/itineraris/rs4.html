@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Viladecans a pie</title>
+	<link rel="shortcut icon" href="http://guia.viladecans.cat/favicon.ico">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/themes/viladecans.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/ajv.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/mapa.css">
+	<script src="http://guia.viladecans.cat/js/jquery.js"></script>-->
+	<script src="http://guia.viladecans.cat/js/jquery.mobile.min.js"></script>
+    <style>
+      html, body, #map-canvas {
+		width: 100%;
+        height: 150px;
+        margin: 0px;
+        padding: 0px
+      }
+	  p {
+		white-space:normal;
+		text-align: justify;
+	}
+	table {
+		font-family:Arial, Helvetica, sans-serif;
+		/*color:#666;*/
+		font-size:12px;
+		text-shadow: 1px 1px 0px #fff;
+		background:#dedede;
+		border:#ccc 1px solid;
+		-moz-border-radius:3px;
+		-webkit-border-radius:3px;
+		border-radius:3px;
+		-moz-box-shadow: 0 1px 2px #d1d1d1;
+		-webkit-box-shadow: 0 1px 2px #d1d1d1;
+		box-shadow: 0 1px 2px #d1d1d1;
+	}
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <script>
+	var map;
+	function initialize() {
+			var mapOptions = {
+				zoom: 17,
+				zoomControl: false,
+				scaleControl: false,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
+
+			// Probamos la geolocalización HTML5
+			if(navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					function(position) {
+						var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+						//Montamos la capa KML
+						var ctaLayer = new google.maps.KmlLayer({
+						url: 'http://guia.viladecans.cat/catala/itineraris/kml/rs4.kml'
+						});
+						ctaLayer.setMap(map);
+						//Cambiamos el market por defecto y añadimos una marca
+						var image = new google.maps.MarkerImage(
+							'http://guia.viladecans.cat/images/gpsloc.png',
+							null, // size
+							null, // origin
+							new google.maps.Point( 8, 8 ), // Ancla (Coloca al centro el marcador)
+							new google.maps.Size( 17, 17 ) // Tamaño escalado (Requerido para icono de pantalla Retina)
+						);
+						var marker = new google.maps.Marker({
+							map: map,
+							flat: true,
+							position: pos,
+							map: map,
+							icon: image,
+							title: "mapa",
+							visible: true
+						});
+		
+						map.setCenter(pos);
+					}, function() {
+						handleNoGeolocation(true);
+					});
+				} else {
+				// El navegador no soporta la geolocalización
+				handleNoGeolocation(false);
+				}
+					
+		}
+
+	function handleNoGeolocation(errorFlag) {
+			if (errorFlag) {
+				var content = 'Error: El servicio de geolocalización ha fallado.';
+			} else {
+			var content = 'Error: Su navegador no soporta geolocalización.';
+			}
+
+			var options = {
+				map: map,
+				position: new google.maps.LatLng(60, 105),
+				content: content
+			};
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+	
+	<div data-role="page">
+		<div data-role="header" data-theme="a">
+			<a href="javascript:history.back(1)" data-icon="back" data-theme="b" data-theme="b">Volver</a>
+			<h1>RS 4</h1>
+			<a href="./mapars4.html" data-icon="location" data-theme="b" data-ajax="false" />Mapa</a>
+		</div>
+		<div data-role="content">
+		<div id="map-canvas"></div>
+		<hr/>
+		<p><b>Itinerario:</b> Barri antic</p>
+		<div>
+			<table>
+				<tr>
+					<td><p><b>Distancia</b></p></td>
+					<td><p>2,77 Km</p></td>
+				</tr>
+				<tr>
+					<td><p><b>Tiempo</b></p></td>
+					<td><p>33 min.</p></td>
+				</tr>
+				<tr>
+					<td><p><b>Velocidad (aprox.)</b></p></td>
+					<td><p>6 km/h</p></td>
+				</tr>
+				<tr>
+					<td><p><b>Calorías (aprox.)</b></p></td>
+					<td><p>377 calorías</p></td>
+				</tr>
+			</table>
+		</div>
+		
+		</div><!--content-->
+
+	</div><!--page-->
+  </body>
+</html>
+

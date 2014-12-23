@@ -1,0 +1,86 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-title" content="Seu electrÃ²nica">
+	<title>Guia Viladecans</title>
+	<link rel="shortcut icon" href="../../favicon.ico">
+	<link rel="stylesheet"  href="../../css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="../../themes/viladecans.css">
+	<link rel="stylesheet"  href="../../css/ajv.css">
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/jquery.mobile.min.js"></script>
+	<style>
+		p{
+			white-space:normal;
+			text-align: justify;
+		}
+		h3{
+			white-space:normal;
+			text-align: justify;
+		}
+		pre { 
+			white-space: nowrap; 
+		}
+		.ui-page .ui-content .ui-listview .ui-li-desc {
+			white-space : normal;
+		}
+		
+	</style>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-37591053-2', 'guia.viladecans.cat');
+		ga('send', 'pageview');
+	</script>
+</head>
+
+<body>
+
+<div data-role="page">
+		<img width="100%" align="center" src="../../images/fotos/headeragenda.jpg">
+		<div data-role="header">
+			<a href="javascript:history.back(1)" data-icon="back">Tornar</a>
+				<h1>Agenda</h1>
+		</div>
+
+	
+
+	<div data-role="content">
+		<p><font color="#007755"><b>Agenda amb les fires, festes i esdeveniments que durant l'any es celebren a Viladecans.</b></font></p>
+	</div>	
+	
+		<ul data-role="listview" data-inset="true" >
+			<li><a href="./bicicletada.html" ><img src="../../images/agenda/Bicicletada.jpg" /><h3 class="ui-li-desc"><font color="#007755">Passejada en Bicicleta</font></h3><p style="font-size:small; color:blue; ">Diumenge, 27 d'abril</p></a></li>
+			<li><a href="./firatapa.html" ><img src="../../images/agenda/rutatapa.jpg" /><h3 class="ui-li-desc"><font color="#007755">Fira de la tapa</font></h3><p style="font-size:small; color:blue; ">Divendres, 9 de maig</p></a></li>
+			<li><a href="./santisidre.html" ><img src="../../images/agenda/santisidre.jpg" /><h3 class="ui-li-desc"><font color="#007755">Fira de Sant Isidre</font></h3><p style="font-size:small; color:blue; ">Dissabte, 17 de maig</p></a></li>
+			<li><a href="./biodiversitat.html" ><img src="../../images/agenda/biodiversitat.jpg" /><h3 class="ui-li-desc"><font color="#007755">Dia mundial de la biodiversitat</font></h3><p style="font-size:small; color:blue; ">Diumenge, 25 de maig</p></a></li>
+			<li><a href="./cursallunaplena.html" ><img src="../../images/agenda/llunaplena.JPG" /><h3 class="ui-li-desc"><font color="#007755">Cursa Lluna Plena</font></h3><p style="font-size:small; color:blue; ">Divendres, 13 de juny</p></a></li>
+			<li><a href="./fangada.html" ><img src="../../images/agenda/fangada.jpg" /><h3 class="ui-li-desc"><font color="#007755">Fangada</font></h3><p style="font-size:small; color:blue; ">Diumenge, 22 de juny</p></a></li>
+			<li><a href="./alcarrer.html" ><img src="../../images/agenda/alcarrer.jpg" /><h3 class="ui-li-desc"><font color="#007755">Festival internacional de teatre "Al carrer"</font></h3><p style="font-size:small; color:blue;">Divendres, 4 de juliol</p></a></li>
+			<li><a href="./festamajor.html" ><img src="../../images/agenda/festamajor.jpg" /><h3 class="ui-li-desc"><font color="#007755">Festa Major d'estiu</font></h3><p style="font-size:small; color:blue; ">Diumenge, 7 de setembre</p></a></li>
+			<li><a href="./rutatapa.html" ><img src="../../images/agenda/rutatapa.jpg" /><h3 class="ui-li-desc"><font color="#007755">Ruta de la tapa</font></h3><p style="font-size:small; color:blue;">Divendres, 19 de setembre</p></a></li>
+			<li><a href="./ocells.html" ><img src="../../images/agenda/ocells.JPG" /><h3 class="ui-li-desc"><font color="#007755">Dia mundial dels ocells</font></h3><p style="font-size:small; color:blue; ">Diumenge, 5 d'octubre</p></a></li>
+			<li><a href="./medieval.html" ><img src="../../images/agenda/firamedieval.png" /><h3 class="ui-li-desc"><font color="#007755">Fira medieval</font></h3><p style="font-size:small; color:blue; ">Divendres, 28 de novembre</p></a></li>
+		</ul>
+
+
+</div><!-- /page -->
+
+<script type="text/javascript">
+ $('[data-role=page]').on('pageshow', function (event, ui) {
+  try {
+    _gaq.push( ['_trackPageview', event.target.id] );
+    console.log(event.target.id);
+  } catch(err) {
+  }
+});
+</script>
+</body>
+</html>

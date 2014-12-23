@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<title>Viladecans a peu</title>
+	<link rel="shortcut icon" href="http://guia.viladecans.cat/favicon.ico">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/themes/viladecans.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/ajv.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/mapa.css">
+	<script src="http://guia.viladecans.cat/js/jquery.js"></script>-->
+	<script src="http://guia.viladecans.cat/js/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+		<style>
+        html,body, div[data-role ="page"] {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+         .ui-content{
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        #map_canvas {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+        }
+	</style>
+    <script type="text/javascript">
+ 
+        
+		//Especifica lat long
+        var map,
+            currentPositionMarker,
+            mapCenter = new google.maps.LatLng(41.315454, 2.013281),
+            map;
+ 
+        // Cambiar zoom
+        function initializeMap()
+        {
+            map = new google.maps.Map(document.getElementById('map_canvas'), {
+				zoom: 15,
+				zoomControl: false,
+				scaleControl: false,
+				center: mapCenter,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+ 
+        function locError(error) {
+            // Avisa usuario si no localiza la posición actual
+            alert("No hem trobat la seva posisió actual");
+        }
+ 		//Cambiamos el marker por defecto y añadimos una marca
+		var image = new google.maps.MarkerImage(
+			'http://guia.viladecans.cat/images/gpsloc.png',
+			null, // size
+			null, // origin
+			new google.maps.Point( 8, 8 ), // Ancla (Coloca al centro el marcador)
+			new google.maps.Size( 17, 17 ) // Tamaño escalado (Requerido para icono de pantalla Retina)
+		);
+		
+
+        // posición actual del usuario
+        function setCurrentPosition(pos) {
+				//Montamos la capa KML
+				var ctaLayer = new google.maps.KmlLayer({
+					url: 'http://guia.viladecans.cat/catala/itineraris/kml/rs3.kml'
+				});
+				ctaLayer.setMap(map);
+				currentPositionMarker = new google.maps.Marker({
+                map: map,
+				flat: true,
+				icon: image,
+                position: new google.maps.LatLng(
+                    pos.coords.latitude,
+                    pos.coords.longitude
+                ),
+                title: "Posició actual"
+            });
+            map.panTo(new google.maps.LatLng(
+                    pos.coords.latitude,
+                    pos.coords.longitude
+                ));
+        }
+ 
+        function displayAndWatch(position) {
+         
+            // set current position
+            setCurrentPosition(position);
+             
+            // watch position
+            watchCurrentPosition();
+        }
+ 
+        function watchCurrentPosition() {
+            var positionTimer = navigator.geolocation.watchPosition(
+                function (position) {
+                    setMarkerPosition(
+                        currentPositionMarker,
+                        position
+                    );
+
+				});
+
+        }
+ 
+        function setMarkerPosition(marker, position) {
+            marker.setPosition(
+                new google.maps.LatLng(
+                    position.coords.latitude,
+                    position.coords.longitude)
+            );
+        }
+ 
+        function initLocationProcedure() {
+            initializeMap();
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(displayAndWatch, locError,
+					{
+					enableHighAccuracy: true,
+					timeout: 3000,
+					maximumAge: 0
+					}
+				);
+            } else {
+                
+                alert("El seu navegador no soporta la geolocalització");
+            }
+        }
+ 
+        // initialize with a little help of jQuery
+        $(document).ready(function() {
+            initLocationProcedure();
+        });
+    </script>
+</head>
+ 
+<body >
+	<div data-role="page">
+			<div data-role="header" data-theme="a">
+				<a href="javascript:history.back(1)" data-icon="back" data-theme="b" data-theme="b">Volver</a>
+			<h1>RS 3</h1>
+		</div>
+    
+		<div id="map_canvas"></div>
+	</div>
+</body>
+ 
+</html>

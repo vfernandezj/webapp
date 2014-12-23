@@ -1,0 +1,93 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>El trànsit Viladecans</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet"  href="../css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="../themes/viladecans.css">
+	<link rel="stylesheet"  href="../css/ajv.css">
+	<script src="../js/jquery.js"></script>
+	<script src="../js/jquery.mobile.min.js"></script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-37591053-2', 'guia.viladecans.cat');
+		ga('send', 'pageview');
+	</script>
+		<style>
+	@media all and (max-width: 35em) {
+	.my-breakpoint .ui-block-a,
+	.my-breakpoint .ui-block-b,
+	.my-breakpoint .ui-block-c,
+	.my-breakpoint .ui-block-d,
+	.my-breakpoint .ui-block-e {
+	width: 100%;
+	float:none;
+	}
+	}
+	.imgcapt{
+		font-size:large;
+		color:#ffffff;
+		margin-top:-30px;
+		margin-left: 10px;
+		}
+	.ui-grid-solo img {
+		float: center;
+		width : 97%;
+		margin : 5px;
+		}
+    .ui-grid-a img {
+		float: center;
+		width : 97%;
+		margin : 5px;
+		}
+	img.displayed {
+	display: block;
+	margin-left: auto;
+	margin-right: auto 
+	}
+	.ui-page { background: black;}
+
+	</style>
+	</head> 
+
+<body> 
+		
+		<div data-role="page">
+			
+			<div data-role="header">
+			<a href="javascript:history.back(1)" data-icon="back">Tornar</a>
+				<h1>Trànsit</h1>
+		</div>
+		<div><img src="../images/escudoajv.png" width="100%" / ></div>
+		<div role="main" class="ui-content">
+			<img width="100%" align="center" src="../images/fotos/transitvila.jpg">
+			<div class="ui-grid-a ">
+				<div class="ui-block-a" id="btnClose">
+					<span class="withfadeout"><a href="./cameras/index.html" data-ajax="false">
+					<img src="../images/interface/cameres.png" /></a></span>
+				</div>
+			<div class="ui-block-b">
+				<span class="withfadeout"><a href="./cameras/mapatransit.html" data-ajax="false">
+				<img src="../images/interface/transit.png" align="center" /></a></span>
+			</div>
+		</div>
+		</div>
+<script type="text/javascript">
+ $('[data-role=page]').on('pageshow', function (event, ui) {
+  try {
+    _gaq.push( ['_trackPageview', event.target.id] );
+    console.log(event.target.id);
+  } catch(err) {
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Viladecans a peu</title>
+	<link rel="shortcut icon" href="http://guia.viladecans.cat/favicon.ico">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/themes/viladecans.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/ajv.css">
+	<link rel="stylesheet"  href="http://guia.viladecans.cat/css/mapa.css">
+	<script src="http://guia.viladecans.cat/js/jquery.js"></script>-->
+	<script src="http://guia.viladecans.cat/js/jquery.mobile.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<style>
+        html,body, div[data-role ="page"] {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+         .ui-content{
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        #map-canvas {
+            height: 100%;
+            width: 100%;
+            padding: 0px;
+        }
+	</style>
+    <script>
+	var map;
+	function initialize() {
+			var mapOptions = {
+				zoom: 17,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
+
+			// Probamos la geolocalización HTML5
+			if(navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					function(position) {
+						var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+						//Montamos la capa KML
+						var ctaLayer = new google.maps.KmlLayer({
+						url: 'http://guia.viladecans.cat/catala/itineraris/kml/rs1.kml'
+						});
+						ctaLayer.setMap(map);
+						//Cambiamos el market por defecto y añadimos una marca
+						var image = new google.maps.MarkerImage(
+							'http://guia.viladecans.cat/images/gpsloc.png',
+							null, // size
+							null, // origin
+							new google.maps.Point( 8, 8 ), // Ancla (Coloca al centro el marcador)
+							new google.maps.Size( 17, 17 ) // Tamaño escalado (Requerido para icono de pantalla Retina)
+						);
+						var marker = new google.maps.Marker({
+							map: map,
+							flat: true,
+							position: pos,
+							map: map,
+							icon: image,
+							title: "mapa",
+							visible: true
+						});
+		
+						map.setCenter(pos);
+					}, function() {
+						handleNoGeolocation(true);
+					});
+				} else {
+				// El navegador no soporta la geolocalización
+				handleNoGeolocation(false);
+				}
+					
+		}
+
+	function handleNoGeolocation(errorFlag) {
+			if (errorFlag) {
+				var content = 'Error: El servicio de geolocalización ha fallado.';
+			} else {
+			var content = 'Error: Su navegador no soporta geolocalización.';
+			}
+
+			var options = {
+				map: map,
+				position: new google.maps.LatLng(60, 105),
+				content: content
+			};
+	}
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+	
+	<div data-role="page">
+		<div data-role="header" data-theme="a">
+			<a href="javascript:history.back(1)" data-icon="back" data-theme="b" data-theme="b">Tornar</a>
+			<h1>RS 1</h1>
+		</div>
+
+		<div id="map-canvas"></div>
+
+	</div><!--page-->
+  </body>
+</html>
+

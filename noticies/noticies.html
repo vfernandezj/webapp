@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet"  href="http://guia.viladecans.cat/css/jquery.mobile.min.css">
+    <script src="http://guia.viladecans.cat/js/jquery.js"></script>
+	<script src="http://guia.viladecans.cat/js/jquery.mobile.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<style>
+	div {
+		align: justify;
+	}
+	.align {
+		align: justify;
+	}
+	li {
+		white-space:normal;
+		}
+	h1 {
+		white-space:normal;
+		}
+	</style>
+	<script type="text/javascript">
+	(function () {
+		var googleResult = [];
+		var newsTopic = "w";
+
+		function initialize() {
+			var feed = new google.feeds.Feed("http://www.viladecanstv.tv/feed/");
+			feed.setResultFormat(google.feeds.Feed.JSON_FORMAT);
+			//feed.includeHistoricalEntries();
+			feed.setNumEntries(100);
+			feed.load(function (result) {
+				if (!result.error) {
+					googleResult = result;
+					var output = '<ul data-role="listview" xdata-filter="true">';
+					var container = document.getElementById("feed");
+					for (var i = 0; i < result.feed.entries.length; i++) {
+						var entry = result.feed.entries[i];
+						output += '<li>';
+						output += '<a href= "#feedContent?i=' + i + '" >';
+						output += '<img src="./ent_agenda.png" />';
+						output += '<h3 align="justify"><font style="white-space:normal;">' + entry.title + '</font></h3>';
+						<!--output += '<p align="justify" ><font style="white-space:normal;">' + entry.contentSnippet + '</font></p>';-->
+						output += '</a>';
+						output += '</li>';
+					}
+					output += '</ul>';
+					$('#newsList').html(output);
+					$('#newsList').trigger('create');
+					$.mobile.loading("hide");
+				}
+			});
+		};
+
+		google.load("feeds", "1");
+		google.setOnLoadCallback(initialize);
+
+		$(document).on("pagebeforechange", function (e, data) {
+			// We only want to handle changePage() calls where the caller is
+			// asking us to load a page by URL
+			if (typeof data.toPage === "string") {
+				// We are being asked to load a page by URL
+				var u = $.mobile.path.parseUrl(data.toPage),
+ 	            _re = "#feedContent";
+
+				if (u.hash.search(_re) !== -1) {
+					var i = urlParam("i", data.toPage);
+					$("#feedContent").remove();
+					var $page = $("<div data-role='page' id='feedContent' data-add-back-btn='true'><div data-role='header'><a href='javascript:history.back(1)' data-icon='back' data-iconpos='notext' data-ajax='false'></a><img src='./agendabanner.png' width='100%'/></div></div>");
+					var $content = $("<div data-role='content' id='feedContent' align='justify'></div>");
+					$content.append(googleResult.feed.entries[i].content);
+					$page.append($content);
+					$.mobile.pageContainer.append($page);
+				}
+
+				_re = "#feeds";
+				if (u.hash.search(_re) !== -1) {
+					newsTopic =  urlParam("topic", data.toPage);
+					e.preventDefault();
+					$.mobile.loading("show");
+					initialize();
+					return;
+				}
+			}
+		});
+
+
+		// Determine url param
+		var urlParam = function (name, url) {
+			var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(url);
+			return results !== null ? results[1] || "" : "";
+		}
+	})();
+</script>
+
+  </head>
+	<body>
+		<div data-role="page" id="newsFeed">
+			<div data-role="header">
+			<img src="./agendabanner.png" width="100%"/>
+				<a href="javascript:history.back(1)" data-icon="back" data-iconpos="notext" data-ajax="false"></a>
+				
+			</div>
+			
+			<div data-role="content" id="newsList">
+			</div>
+
+		</div>
+	</body> 
+</html>

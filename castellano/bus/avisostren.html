@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-title" content="Seu electrònica">
+	<title>Incidencias tren</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet"  href="../../css/jquery.mobile.min.css">
+	<link rel="stylesheet"  href="../../themes/viladecans.css">
+	<link rel="stylesheet"  href="../../css/ajv.css">
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/jquery.mobile.min.js"></script>
+	<style type='text/css'>
+    .ui-footer .ui-btn-right {
+	}
+	.articleContent > table > tbody > tr > td > font > br {
+	display: none;
+	}
+	.articleContent > table > tbody > tr > td > font > br + div {
+	display: none;
+	}
+
+	.articleContent > p > img {
+	display: none;
+	}
+	
+	.articleContent * {
+	font-size: medium !important;
+	}
+	p
+	{
+	white-space:normal;
+	text-align:justify;
+	}
+
+	</style>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-37591053-2', 'guia.viladecans.cat');
+		ga('send', 'pageview');
+	</script>
+</head>
+<body>
+
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+
+// ISCPA added search filter, home icon, updated CDN-Hosted links
+// forked from sumukh1's "forked: RSS Reader with jQuery Mobile" http://jsdo.it/sumukh1/4Ton
+/* configuration */
+var maxLength = 20;
+/* writing HTML */
+document.write(
+  '<div data-role="page" id="list">' +
+    '  <div data-role="header" data-position="fixed">' +
+    '    <a href="javascript:history.back(1)" data-role="button" data-icon="back" data-back="true" data-ajax="false">Volver</a>' +
+    '    <h1>Incidencias tren</h1>' +
+  '  </div>' +
+  '  <div data-role="content">' +
+  '    <ul data-role="listview" data-filter="false" id="articleList">'
+);
+for(var i=1; i<=maxLength; i++){
+  document.write(
+    '<li id="list' + i + '"><a href="#article' + i + '" id="link' + i + '" style="white-space:normal;" >&nbsp;</a></li>'
+  );
+}
+document.write(
+  '    </ul>' +
+  '  </div>' +
+  '</div>'
+);
+for(i=1; i<=maxLength; i++){
+  document.write(
+    '<div data-role="page" id="article' + i + '">' +
+    '  <div data-role="header" data-position="inline">' +
+    '    <a href="#list" data-role="button" data-icon="" data-back="true" data-ajax="false">Tornar</a>' +
+    '    <h1 id="articleHeader' + i + '">&nbsp;</h1>' +
+    '    <a href="#" id="openButton' + i + '" data-role="button" data-icon="action"' +
+    '      class="ui-btn-right" rel="external">Obrir</a>' +
+    '  </div>' +
+    '  <div data-role="content">' +
+    '    <div id="articleContent' + i + '" class="articleContent"></div>' +
+    '    <div data-role="controlgroup" data-type="horizontal">' +
+    '      <a href="#article' + String(i-1) + '" data-role="button" data-icon="arrow-l"' +
+    '        data-inline="true" class="prevButton">Prev</a>' +
+    '      <a href="#article' + String(i+1) + '" data-role="button" data-icon="arrow-r"' +
+    '        data-inline="true" class="nextButton" data-iconpos="right">Següent</a>' +
+    '    </div>' +
+    '  </div>' +
+    '</div>'
+  );
+}
+/* JSONP */
+$(function(){
+  //getOnlineFeed('http://www.gencat.cat/rodalies/incidencies_rodalies_rss_r15_es_ES.xml');
+  getOnlineFeed('http://www.gencat.cat/rodalies/incidencies_rodalies_rss_ca_ES.xml');
+  
+/*
+  getOnlineFeed('http://www.engadget.com/rss.xml');
+  getOnlineFeed('http://www.fremont.k12.ca.us/site/RSS.aspx?DomainID=1&ModuleInstanceID=4613&PageID=1');
+  getOnlineFeed('http://news.google.com/news?hl=ja&ned=us&ie=UTF-8&oe=UTF-8&output=atom&topic=h');
+  getOnlineFeed('http://www.appbank.net/feed');
+  getOnlineFeed('http://japanese.engadget.com/rss.xml');
+  getOnlineFeed('http://www.bebit.co.jp/index.xml');  
+  getOnlineFeed('http://www.ntt.com/rss/release.rdf?link_id=ostop_service_rss');
+  getOnlineFeed('http://feeds.feedburner.com/gapsis');
+  getOnlineFeed('http://octoba.net/feed');
+  getOfflineFeed('google_news_jsonp.js');
+*/
+});
+/* functions */
+var listEntries = function(json) {
+  if (!json.responseData.feed.entries) return false;
+  $('#widgetTitle').text(json.responseData.feed.title);
+  var articleLength =json.responseData.feed.entries.length;
+  articleLength = (articleLength > maxLength) ? maxLength : articleLength;
+  for (var i = 1; i <= articleLength ; i++) {
+    var entry = json.responseData.feed.entries[i-1];
+    $('#link' + i).text(entry.title);
+    $('#articleHeader' + i).text(entry.title);
+    $('#openButton' + i).attr('href', entry.link);
+    $('#articleContent' + i).append(entry.content);
+  }
+  $('#article1 .prevButton').remove();
+  $('#article' + articleLength + ' .nextButton').remove();
+  if (articleLength < maxLength) {
+    for (i = articleLength + 1; i <= maxLength; i++) {
+      $('#list' + i).remove();
+      $('#article' + i).remove();
+    }
+  }
+};
+var getOnlineFeed = function(url) {
+  var script = document.createElement('script');
+  script.setAttribute('src', 'http://ajax.googleapis.com/ajax/services/feed/load?callback=listEntries&hl=ja&output=json-in-script&q='
+                      + encodeURIComponent(url)
+                      + '&v=1.0&num=' + maxLength);
+  script.setAttribute('type', 'text/javascript');
+  document.documentElement.firstChild.appendChild(script);
+};
+var getOfflineFeed = function(url) {
+  var script = document.createElement('script');
+  script.setAttribute('src', url);
+  script.setAttribute('type', 'text/javascript');
+  document.documentElement.firstChild.appendChild(script);
+};
+//]]>  
+
+</script>
+<script type="text/javascript">
+ $('[data-role=page]').on('pageshow', function (event, ui) {
+  try {
+    _gaq.push( ['_trackPageview', event.target.id] );
+    console.log(event.target.id);
+  } catch(err) {
+  }
+});
+</script>
+
+</body>
+
+
+</html>
+

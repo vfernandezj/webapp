@@ -1,0 +1,65 @@
+<?php
+	session_start();
+	
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="copyright" content="&copy; 2014, Ajuntament de Viladecans. All rights reserved." />
+    <link rel="stylesheet" type="text/css" href="vendor/jquery.mobile/jquery.mobile-1.1.1.css" />
+    <link rel="stylesheet" type="text/css" href="css/tomatometer.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="vendor/mustache/mustache.js"></script>
+    <script type="text/javascript" src="vendor/jquery/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="vendor/jquery.jsonp/jquery.jsonp.js"></script>
+    <script type="text/javascript" src="vendor/jquery.mobile/jquery.mobile-1.1.1.js"></script>
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <title>Sancions</title>
+</head>
+<body>
+		<div data-role="page">
+
+			<p align="center"><img src="./images/escut_ajv.png"/><br/><b>Gestió de multes</b></p>
+			<div data-role="content">
+				<form action="./ldap.php" method="POST">
+					<fieldset>
+					<label for="username"><b>Usuari:</b></label>
+					<input id="username" type="text" name="username" /> 
+					<label for="password"><b>Contrasenya:</b></label>
+					<input id="password" type="password" name="password" />
+					<input type="submit" name="submit" value="Submit" />
+					</fieldset>
+				</form>
+			<?php
+				if (!(empty($_GET['error'])))
+				{
+						$error = $_GET['error'];
+										if ($error == 1 ){
+					echo '<h3><span style="color:#FF0000";>No hi ha conexió amb el servidor</span></h3>';
+				} else if ($error == 2 ){
+					echo '<h3><span style="color:#FF0000";>Contrasenya incorrecta</span></h3>';
+				} else if ($error == 3 ){
+					echo '<h3><span style="color:#FF0000";>Aquest usuari no existeix</span></h3>';
+				}
+				}
+				
+				
+				
+
+				
+			?>
+			</div>
+		</div>
+
+
+	</body>
+    
+</body>
+
+</html>
